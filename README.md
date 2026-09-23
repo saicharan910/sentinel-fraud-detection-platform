@@ -50,7 +50,7 @@ Fraud Operations Console
 
 ```powershell
 cd sentinel_fraud_platform
-& "C:\Users\saich\AppData\Local\Programs\Python\Python314\python.exe" -m venv .venv
+py -3.14 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
