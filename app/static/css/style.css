@@ -1,0 +1,1061 @@
+/* =========================================================
+   SENTINEL
+   Fraud Detection & Risk Operations
+   Professional Enterprise UI
+========================================================= */
+
+:root {
+    --page-bg: #f3f5f7;
+    --surface: #ffffff;
+    --surface-muted: #f8f9fb;
+    --surface-hover: #f1f4f7;
+
+    --border: #d9dee5;
+    --border-light: #e7eaee;
+
+    --text: #202832;
+    --text-secondary: #596574;
+    --muted: #7a8592;
+
+    --primary: #2457a6;
+    --primary-dark: #1d4788;
+
+    --success: #18794e;
+    --success-bg: #eaf7f1;
+
+    --warning: #9a6200;
+    --warning-bg: #fff6df;
+
+    --high: #b65d13;
+    --high-bg: #fff0e5;
+
+    --danger: #b42318;
+    --danger-bg: #fcebea;
+
+    --radius: 5px;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    background: var(--page-bg);
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    font-size: 13px;
+
+    line-height: 1.45;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   APPLICATION HEADER
+========================================================= */
+
+.topbar {
+    height: 60px;
+
+    padding: 0 28px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 12px;
+}
+
+.brand-name {
+    color: #17202a;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.brand-subtitle {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.connection-status {
+    color: var(--warning);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: .4px;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.container {
+    width: min(1500px, 100%);
+
+    margin: 0 auto;
+
+    padding: 20px 24px 30px;
+}
+
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 14px;
+}
+
+.metric-card {
+    min-height: 104px;
+
+    padding: 16px 18px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+}
+
+.metric-card:hover {
+    border-color: #c5ccd5;
+}
+
+.danger-card {
+    border-left: 3px solid var(--danger);
+}
+
+.metric-label {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: .8px;
+
+    text-transform: uppercase;
+}
+
+.metric-value {
+    margin-top: 9px;
+
+    color: var(--text);
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+    letter-spacing: -.4px;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 2fr) minmax(330px, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.panel {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    overflow: hidden;
+}
+
+.panel-header {
+    min-height: 56px;
+
+    padding: 13px 16px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border-light);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.panel-header h2 {
+    margin: 0;
+
+    color: #29333e;
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    letter-spacing: .6px;
+
+    text-transform: uppercase;
+}
+
+.panel-header span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.panel-header .live-label {
+    display: inline-block;
+
+    margin: 0;
+
+    color: var(--success);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: .8px;
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+.chart-container {
+    height: 270px;
+
+    padding: 15px;
+}
+
+
+/* =========================================================
+   DECISION QUEUE
+========================================================= */
+
+.alerts-list {
+    height: 270px;
+
+    overflow-y: auto;
+
+    padding: 10px;
+}
+
+.alert {
+    margin-bottom: 8px;
+
+    padding: 10px 11px;
+
+    background: var(--surface-muted);
+
+    border: 1px solid var(--border-light);
+
+    border-left: 3px solid var(--high);
+
+    border-radius: 4px;
+
+    cursor: pointer;
+}
+
+.alert:last-child {
+    margin-bottom: 0;
+}
+
+.alert:hover {
+    background: var(--surface-hover);
+
+    border-color: var(--border);
+}
+
+.alert.critical {
+    border-left-color: var(--danger);
+}
+
+.alert b {
+    color: var(--text);
+
+    font-size: 11px;
+
+    font-weight: 650;
+}
+
+.alert small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.filter-bar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px;
+
+    background: #fafbfc;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.filter-bar input,
+.filter-bar select {
+    height: 35px;
+
+    padding: 0 10px;
+
+    color: var(--text);
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 4px;
+
+    outline: none;
+
+    font-size: 11px;
+}
+
+.filter-bar input {
+    flex: 1;
+
+    min-width: 260px;
+}
+
+.filter-bar input::placeholder {
+    color: #98a1ac;
+}
+
+.filter-bar input:focus,
+.filter-bar select:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 2px rgba(36, 87, 166, .08);
+}
+
+.filter-bar select {
+    min-width: 145px;
+}
+
+.filter-bar button {
+    height: 35px;
+
+    padding: 0 14px;
+
+    color: var(--text-secondary);
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 4px;
+
+    font-size: 11px;
+
+    font-weight: 500;
+}
+
+.filter-bar button:hover {
+    color: var(--text);
+
+    background: var(--surface-hover);
+
+    border-color: #c5ccd5;
+}
+
+
+/* =========================================================
+   TRANSACTION TABLE
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    max-height: 620px;
+
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+
+    min-width: 1120px;
+
+    border-collapse: collapse;
+}
+
+thead {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 5;
+}
+
+th {
+    padding: 10px;
+
+    color: #687482;
+
+    background: #f6f8fa;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 9px;
+
+    font-weight: 650;
+
+    letter-spacing: .65px;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px;
+
+    color: #46515d;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border-light);
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+tbody tr {
+    cursor: pointer;
+}
+
+tbody tr:hover td {
+    background: #f7f9fb;
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+td strong {
+    color: #303b47;
+
+    font-weight: 600;
+}
+
+.muted {
+    color: #8a95a1;
+
+    font-size: 9px;
+}
+
+.risk-score {
+    margin-left: 5px;
+
+    color: #52606d;
+}
+
+
+/* =========================================================
+   RISK LEVELS
+========================================================= */
+
+.risk {
+    font-weight: 700;
+
+    letter-spacing: .15px;
+}
+
+.LOW {
+    color: var(--success);
+}
+
+.MEDIUM {
+    color: var(--warning);
+}
+
+.HIGH {
+    color: var(--high);
+}
+
+.CRITICAL {
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   DECISIONS
+========================================================= */
+
+.BLOCK {
+    color: var(--danger);
+
+    font-weight: 700;
+}
+
+.REVIEW {
+    color: var(--high);
+
+    font-weight: 700;
+}
+
+.ALLOW {
+    color: var(--success);
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INVESTIGATION MODAL
+========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(24, 32, 40, .45);
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-content {
+    width: min(920px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    box-shadow:
+        0 12px 32px rgba(31, 41, 55, .18);
+}
+
+.modal-header {
+    padding: 16px 18px;
+
+    background: #fafbfc;
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+}
+
+.modal-kicker {
+    margin-bottom: 5px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    font-weight: 650;
+
+    letter-spacing: .9px;
+}
+
+.modal-header h2 {
+    margin: 0;
+
+    color: #27323d;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.close-button {
+    width: 30px;
+
+    height: 30px;
+
+    padding: 0;
+
+    color: #6c7783;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 4px;
+
+    font-size: 20px;
+
+    line-height: 26px;
+}
+
+.close-button:hover {
+    color: var(--text);
+
+    background: var(--surface-hover);
+}
+
+
+/* =========================================================
+   MODAL SECTIONS
+========================================================= */
+
+.modal-section {
+    padding: 17px 18px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.modal-section:last-child {
+    border-bottom: 0;
+}
+
+.modal-section h3 {
+    margin: 0 0 12px;
+
+    color: #697582;
+
+    font-size: 9px;
+
+    font-weight: 650;
+
+    letter-spacing: .9px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TRANSACTION DETAILS
+========================================================= */
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+.details-grid>div {
+    min-width: 0;
+
+    padding: 10px;
+
+    background: #fafbfc;
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 4px;
+}
+
+.details-grid span,
+.risk-summary span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: .65px;
+
+    text-transform: uppercase;
+}
+
+.details-grid strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #34404c;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   RISK SUMMARY
+========================================================= */
+
+.risk-summary {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+}
+
+.risk-summary>div {
+    padding: 12px;
+
+    background: #fafbfc;
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 4px;
+}
+
+.risk-summary strong {
+    color: #34404c;
+
+    font-size: 15px;
+}
+
+.decision-value {
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   FRAUD REASONS
+========================================================= */
+
+.reason-list {
+    margin: 0;
+
+    padding-left: 18px;
+}
+
+.reason-list li {
+    margin-bottom: 6px;
+
+    color: #4d5965;
+
+    font-size: 11px;
+}
+
+.reason-list li:last-child {
+    margin-bottom: 0;
+}
+
+.reason-list li::marker {
+    color: var(--high);
+}
+
+
+/* =========================================================
+   BEHAVIOURAL FEATURES
+========================================================= */
+
+.feature-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+.feature-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 9px 10px;
+
+    background: #fafbfc;
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 4px;
+}
+
+.feature-row span {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.feature-row strong {
+    color: #46515d;
+
+    font-size: 9px;
+
+    font-weight: 650;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   SCROLLBARS
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f3f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c4cbd3;
+
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #adb6c0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1150px) {
+
+    .cards {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .feature-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .topbar {
+        height: auto;
+
+        min-height: 60px;
+
+        padding: 12px 15px;
+
+        gap: 10px;
+
+        align-items: flex-start;
+    }
+
+    .brand {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 2px;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+
+    .connection-status {
+        padding-top: 3px;
+
+        font-size: 9px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .filter-bar input {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+    .filter-bar select,
+    .filter-bar button {
+        width: 100%;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .risk-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal {
+        padding: 8px;
+    }
+
+    .modal-content {
+        width: 100%;
+
+        max-height: 95vh;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+}

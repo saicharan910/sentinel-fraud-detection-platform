@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentinel | Fraud Operations Console</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-name">SENTINEL</div>
+            <div class="brand-subtitle">
+                Fraud Detection & Risk Operations
+            </div>
+        </div>
+
+        <div id="status" class="connection-status">
+            ● CONNECTING
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- =====================================================
+         KPI CARDS
+    ====================================================== -->
+
+        <section class="cards">
+
+            <article class="metric-card">
+                <div class="metric-label">
+                    TRANSACTIONS
+                </div>
+
+                <div id="total" class="metric-value">
+                    0
+                </div>
+            </article>
+
+
+            <article class="metric-card">
+                <div class="metric-label">
+                    VOLUME PROCESSED
+                </div>
+
+                <div id="volume" class="metric-value">
+                    ₹0
+                </div>
+            </article>
+
+
+            <article class="metric-card">
+                <div class="metric-label">
+                    AVG RISK
+                </div>
+
+                <div id="avg" class="metric-value">
+                    0.0
+                </div>
+            </article>
+
+
+            <article class="metric-card danger-card">
+                <div class="metric-label">
+                    HIGH / CRITICAL
+                </div>
+
+                <div id="alerts" class="metric-value">
+                    0 / 0
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+         RISK SIGNAL + DECISION QUEUE
+    ====================================================== -->
+
+        <section class="dashboard-grid">
+
+            <article class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Real-Time Risk Signal</h2>
+
+                        <span>
+                            model probability + behavioural rules
+                        </span>
+                    </div>
+
+                    <span class="live-label">
+                        LIVE
+                    </span>
+
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="chart"></canvas>
+                </div>
+
+            </article>
+
+
+            <article class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Decision Queue</h2>
+
+                        <span>
+                            latest elevated-risk events
+                        </span>
+                    </div>
+
+                </div>
+
+                <div id="alertsList" class="alerts-list"></div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+         TRANSACTION STREAM
+    ====================================================== -->
+
+        <section class="panel transaction-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>Transaction Stream</h2>
+
+                    <span id="feed">
+                        waiting for events
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- FILTER BAR -->
+
+            <div class="filter-bar">
+
+                <input id="searchInput" type="text" placeholder="Search customer, merchant, device, city...">
+
+
+                <select id="riskFilter">
+
+                    <option value="ALL">
+                        All Risk Levels
+                    </option>
+
+                    <option value="LOW">
+                        Low
+                    </option>
+
+                    <option value="MEDIUM">
+                        Medium
+                    </option>
+
+                    <option value="HIGH">
+                        High
+                    </option>
+
+                    <option value="CRITICAL">
+                        Critical
+                    </option>
+
+                </select>
+
+
+                <select id="decisionFilter">
+
+                    <option value="ALL">
+                        All Decisions
+                    </option>
+
+                    <option value="ALLOW">
+                        Allow
+                    </option>
+
+                    <option value="REVIEW">
+                        Review
+                    </option>
+
+                    <option value="BLOCK">
+                        Block
+                    </option>
+
+                </select>
+
+
+                <button id="clearFilters">
+                    Clear
+                </button>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>TIME</th>
+
+                            <th>CUSTOMER</th>
+
+                            <th>MERCHANT</th>
+
+                            <th>AMOUNT</th>
+
+                            <th>DEVICE</th>
+
+                            <th>GEO / IP</th>
+
+                            <th>RISK</th>
+
+                            <th>DECISION</th>
+
+                            <th>WHY</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="rows"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+     TRANSACTION INVESTIGATION MODAL
+========================================================== -->
+
+    <div id="transactionModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <div class="modal-kicker">
+                        TRANSACTION INVESTIGATION
+                    </div>
+
+                    <h2 id="modalTransactionId">
+                        --
+                    </h2>
+
+                </div>
+
+                <button id="closeModal" class="close-button" aria-label="Close">
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- BASIC INFORMATION -->
+
+            <section class="modal-section">
+
+                <h3>Transaction Details</h3>
+
+                <div class="details-grid">
+
+                    <div>
+                        <span>Timestamp</span>
+                        <strong id="modalTimestamp">--</strong>
+                    </div>
+
+                    <div>
+                        <span>Customer</span>
+                        <strong id="modalCustomer">--</strong>
+                    </div>
+
+                    <div>
+                        <span>Merchant</span>
+                        <strong id="modalMerchant">--</strong>
+                    </div>
+
+                    <div>
+                        <span>Amount</span>
+                        <strong id="modalAmount">--</strong>
+                    </div>
+
+                    <div>
+                        <span>Device</span>
+                        <strong id="modalDevice">--</strong>
+                    </div>
+
+                    <div>
+                        <span>Location</span>
+                        <strong id="modalLocation">--</strong>
+                    </div>
+
+                    <div>
+                        <span>IP Country</span>
+                        <strong id="modalIPCountry">--</strong>
+                    </div>
+
+                    <div>
+                        <span>Model Probability</span>
+                        <strong id="modalProbability">--</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RISK -->
+
+            <section class="modal-section">
+
+                <h3>Risk Assessment</h3>
+
+                <div class="risk-summary">
+
+                    <div>
+                        <span>Risk Score</span>
+
+                        <div id="modalRisk">
+                            --
+                        </div>
+                    </div>
+
+
+                    <div>
+
+                        <span>Decision</span>
+
+                        <strong id="modalDecision" class="decision-value">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REASONS -->
+
+            <section class="modal-section">
+
+                <h3>Fraud Signals</h3>
+
+                <ul id="modalReasons" class="reason-list"></ul>
+
+            </section>
+
+
+            <!-- FEATURES -->
+
+            <section class="modal-section">
+
+                <h3>Behavioural Features</h3>
+
+                <div id="modalFeatures" class="feature-grid"></div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+
+    <script src="/static/js/dashboard.js"></script>
+
+</body>
+
+</html>
